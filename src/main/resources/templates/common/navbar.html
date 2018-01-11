@@ -30,7 +30,14 @@
                         <a class="nav-link js-scroll-trigger" href="/contact" th:text="#{navbar.contact}"></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="/login" th:text="#{navbar.login}"></a>
+                        <div th:if="${#authorization.expression('!isAuthenticated()')}">
+                            <a class="nav-link js-scroll-trigger" href="/login" th:text="#{navbar.login}"></a>
+                        </div>
+                        <div th:if="${#authorization.expression('isAuthenticated()')}">
+                            <form id="f" th:action="@{/logout}" method="post" role="form" class="navbar-form">
+                                <button type="submit" th:text="#{navbar.logout}" class="btn btn-primary" />
+                            </form>
+                        </div>
                     </li>
                 </ul>
             </div>
